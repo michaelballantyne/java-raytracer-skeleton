@@ -31,26 +31,6 @@ public class Matrix {
 			}
 	}
 
-
-	// ----------------------------------------------------------------------- copy constructor
-
-	public Matrix (Matrix mat) {
-		for (int x = 0; x < 4; x++)				
-			for (int y = 0; y < 4; y++)			
-				m[x][y] = mat.m[x][y];	
-	}
-
-	// ----------------------------------------------------------------------- assignment operator
-
-	public void set (Matrix rhs) {
-		if (this != rhs) {
-			for (int x = 0; x < 4; x++)				
-				for (int y = 0; y < 4; y++)			
-					m[x][y] = rhs.m[x][y];	
-		}
-	}
-
-
 	// ----------------------------------------------------------------------- operator*
 	// multiplication of two matrices
 
@@ -67,32 +47,21 @@ public class Matrix {
 				product.m[x][y] = sum;			
 			}
 		
-		return (product);
+		return product;
 	}
 
 
 	// ----------------------------------------------------------------------- operator/
 	// division by a scalar
 
-	public void divide (double d) {
-		for (int x = 0; x < 4; x++)				
-			for (int y = 0; y < 4; y++)			
-				m[x][y] = m[x][y] / d;	
-	}
-
-
-
-	// ----------------------------------------------------------------------- set_identity
-	// set matrix to the identity matrix
-
-	public void set_identity() {
-	    for (int x = 0; x < 4; x++)
-			for (int y = 0; y < 4; y++) {
-				if (x == y)
-					m[x][y] = 1.0;
-				else
-					m[x][y] = 0.0;
+	public Matrix divide (double d) {
+		Matrix result = new Matrix();
+		for (int x = 0; x < 4; x++)	{		
+			for (int y = 0; y < 4; y++)	{	
+				result.m[x][y] = m[x][y] / d;
 			}
+		}
+		return result;
 	}
 
 	public boolean equals(Object obj) {

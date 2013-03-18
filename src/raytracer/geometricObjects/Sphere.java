@@ -28,9 +28,9 @@ public class Sphere extends GeometricObject {
 	
 	public double hit(Ray ray, ShadeRec sr) {
 		double 		t;
-		Vector3D	temp 	= ray.o.subtract(center);
-		double 		a 		= ray.d.dot(ray.d);
-		double 		b 		= 2.0 * temp.dot(ray.d);
+		Vector3D	temp 	= ray.origin.subtract(center);
+		double 		a 		= ray.direction.dot(ray.direction);
+		double 		b 		= 2.0 * temp.dot(ray.direction);
 		double 		c 		= temp.dot(temp) - (radius * radius);
 		double 		disc	= b * b - 4.0 * a * c;
 		
@@ -42,16 +42,16 @@ public class Sphere extends GeometricObject {
 			t = (-b - e) / denom;    // smaller root
 		
 			if (t > S_EPSILON) {
-				sr.normal 	 = new Normal(temp.add(ray.d.multiply(t)).divide(radius));
-				sr.localHitPoint = ray.o.add(ray.d.multiply(t));
+				sr.normal 	 = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
+				sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
 				return (t);
 			} 
 		
 			t = (-b + e) / denom;    // larger root
 		
 			if (t > S_EPSILON) {
-				sr.normal 	 = new Normal(temp.add(ray.d.multiply(t)).divide(radius));
-				sr.localHitPoint = ray.o.add(ray.d.multiply(t));
+				sr.normal 	 = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
+				sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
 				return (t);
 			} 
 		}

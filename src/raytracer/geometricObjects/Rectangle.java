@@ -48,13 +48,13 @@
 		}	
 		 												 
 		public double hit(Ray ray, ShadeRec sr) {	
-			double t = normal.dot(p0.subtract(ray.o)) / 
-						normal.dot(ray.d);
+			double t = normal.dot(p0.subtract(ray.origin)) / 
+						normal.dot(ray.direction);
 			
 			if (t <= Constants.EPSILON)
 				return (-1);
 					
-			Point3D p = ray.o.add(ray.d.multiply(t));
+			Point3D p = ray.origin.add(ray.direction.multiply(t));
 			Vector3D d = p.subtract(p0);
 			
 			double ddota = d.dot(a);

@@ -27,11 +27,11 @@ public class Plane extends GeometricObject {
 	// hit returns a number > 0 if hit
 	
 	public double hit(Ray ray, ShadeRec sr) {
-		double t = ((a.subtract(ray.o)).dot(n)) / ((ray.d.dot(n))); 
+		double t = ((a.subtract(ray.origin)).dot(n)) / ((ray.direction.dot(n))); 
 		
 		if (t > S_EPSILON) {
 			sr.normal = n;
-			sr.localHitPoint = ray.o.add(ray.d.multiply(t));
+			sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
 			
 			return t;	
 		}

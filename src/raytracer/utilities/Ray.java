@@ -7,12 +7,12 @@ package raytracer.utilities;
 //See the file COPYING.txt for the full license.
 
 public class Ray {
-	public Point3D		o;  	// origin 
-	public Vector3D		d; 		// direction 
+	public final Point3D origin;
+	public final Vector3D direction; 
 
-	public Ray (Point3D origin, Vector3D dir) {
-		o = origin;
-		d = dir;
+	public Ray (Point3D origin, Vector3D direction) {
+		this.origin = origin;
+		this.direction = direction;
 	}
 
 	public boolean equals(Object obj) {
@@ -21,11 +21,11 @@ public class Ray {
 		}
 		else {
 			Ray other = (Ray)obj;
-			return (o.equals(other.o) && d.equals(other.d));
+			return (origin.equals(other.origin) && direction.equals(other.direction));
 		}
 	}
 
 	public String toString() {
-		return "Ray: origin (" + o + ")\tdir (" + d + ")";
+		return "Ray: origin (" + origin + ")\tdir (" + direction + ")";
 	}
 }

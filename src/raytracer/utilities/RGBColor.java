@@ -26,10 +26,10 @@ public class RGBColor {
 	public static final RGBColor BLUE = new RGBColor(0f, 0f, 1f);										// blue
 
 
-	public RGBColor(float newR, float newG, float newB)	{
-		r = newR;
-		g = newG;
-		b = newB;
+	public RGBColor(float r, float g, float b)	{
+		this.r = r;
+		this.g = g;
+		this.b = b;
 	}
 
 	// ----------------------------------------------------------------------- operator+

@@ -40,9 +40,7 @@ public class Pinhole extends Camera {
 	public void renderScene(World w) {
 		RGBColor	L;
 		ViewPlane	vp = new ViewPlane(w.vp);	 								
-		Ray			ray;
 		int 		depth = 0;  
-		Point2D 	pp = new Point2D();		// sample point on a pixel
 		int n = (int)Math.sqrt((float)vp.numSamples);
 			
 		vp.s /= zoom;
@@ -54,9 +52,9 @@ public class Pinhole extends Camera {
 				
 				for (int p = 0; p < n; p++)			// up pixel
 					for (int q = 0; q < n; q++) {	// across pixel
-						pp.x = vp.s * (c - 0.5 * vp.hres + (q + 0.5) / n); 
-						pp.y = vp.s * (r - 0.5 * vp.vres + (p + 0.5) / n);
-						Vector3D rayDirection = getDirection(pp);
+						double x = vp.s * (c - 0.5 * vp.hres + (q + 0.5) / n); 
+						double y = vp.s * (r - 0.5 * vp.vres + (p + 0.5) / n);
+						Vector3D rayDirection = getDirection(new Point2D(x, y));
 						L = L.add(w.tracer.traceRay(new Ray(rayOrigin, rayDirection), depth));
 					}	
 												
