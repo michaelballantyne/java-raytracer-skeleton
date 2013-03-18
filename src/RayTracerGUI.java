@@ -15,10 +15,10 @@ public class RayTracerGUI extends JPanel implements Runnable {
 	private JTextArea log;
 	private JFileChooser fc;
 	private JMenu menu;
-	private Graphics g;
 	
 	private World world;
 	private Thread raytracer;
+	private Timer timer;
 
 	public RayTracerGUI () {
 		// modify this line if you want to create different scenes
@@ -54,6 +54,23 @@ public class RayTracerGUI extends JPanel implements Runnable {
 
 		frame.pack();
 		frame.setVisible(true);
+		
+		// Set up to show how far we've progressed each second.
+		class Repainter implements ActionListener
+		{
+		    private JFrame frame;
+		    public Repainter(JFrame frame){
+		        this.frame = frame;
+		    }
+		    public void actionPerformed(ActionEvent event)
+		    {
+		    	getGraphics().drawImage(world.image, 0, 0, RayTracerGUI.this);
+		    }
+		}
+		
+		ActionListener listener = new Repainter(frame);
+		timer = new Timer(1000, listener);
+        timer.start();
 		
 		// initialize the off-screen rendering buffer
 		raytracer = new Thread(this);
@@ -92,7 +109,6 @@ public class RayTracerGUI extends JPanel implements Runnable {
 				}
 				paintComponent(getGraphics());
 			}
-
 		});
 
 		menu.add(menuItem);
@@ -101,6 +117,7 @@ public class RayTracerGUI extends JPanel implements Runnable {
 		menuItem.addActionListener(new ActionListener() {
 			// Define an action listener to respond to menu item
 			public void actionPerformed(ActionEvent evt) {
+				timer.stop();
 				frame.setVisible(false);
 				frame.dispose();
 			}
@@ -109,11 +126,10 @@ public class RayTracerGUI extends JPanel implements Runnable {
 		return menuBar;
 	}
 
-
-
 	public void paintComponent(Graphics g) {
-		if (finished)
+		if (finished) {
 			g.drawImage(world.image, 0, 0, this);
+		}
 	}
 
 	public void run() {
@@ -121,18 +137,15 @@ public class RayTracerGUI extends JPanel implements Runnable {
 
 		long time = System.currentTimeMillis();
 		world.renderScene();
-		g.drawImage(world.image, 0, 0, this);        // doing this less often speed things up a bit
+		g.drawImage(world.image, 0, 0, this); // doing this less often speed things up a bit
 
 		time = System.currentTimeMillis() - time;
-		log.append("Rendered in "+(time/60000)+":"+((time%60000)*0.001) + ".\n");
+		log.append("Rendered in " + (time / 60000) + ":" + ((time % 60000) * 0.001) + ".\n");
 		finished = true;
 	}
-
 
 	public static void main (String[] args)
 	{
 		new RayTracerGUI();
 	}
-
 }
-
