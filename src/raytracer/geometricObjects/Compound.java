@@ -31,6 +31,7 @@ public abstract class Compound extends GeometricObject {
 		Point3D		localHitPoint = null;
 		boolean		hit 		= false;
 		double		tmin 		= Double.MAX_VALUE;
+		RGBColor    color       = null;
 		
 		for (GeometricObject obj : objects) {
 			double t = obj.hit(ray, sr);
