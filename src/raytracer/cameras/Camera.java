@@ -19,7 +19,7 @@ public abstract class Camera {
 	
 	// ----------------------------------------------------------------- default constructor
 
-	public Camera(Point3D eye, Point3D lookat, double ra, Vector3D up, float exposureTime) {		
+	public Camera(Point3D eye, Point3D lookat, Vector3D up, float exposureTime) {		
 		this.eye = eye;
 		this.lookat = lookat;
 		this.up = up;

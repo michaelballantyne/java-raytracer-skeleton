@@ -44,6 +44,7 @@ public class Sphere extends GeometricObject {
 			if (t > S_EPSILON) {
 				sr.normal 	 = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
 				sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
+				sr.color = color;
 				return (t);
 			} 
 		
@@ -52,6 +53,7 @@ public class Sphere extends GeometricObject {
 			if (t > S_EPSILON) {
 				sr.normal 	 = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
 				sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
+				sr.color = color;
 				return (t);
 			} 
 		}

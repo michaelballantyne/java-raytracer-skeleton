@@ -1,4 +1,7 @@
 package raytracer.cameras;
+import java.util.ArrayList;
+import java.util.List;
+
 import raytracer.utilities.*;
 import raytracer.world.*;
 
@@ -10,9 +13,9 @@ import raytracer.world.*;
 
 public class Pinhole extends Camera {
 
-	public Pinhole(Point3D eye, Point3D lookat, double ra, Vector3D up,
+	public Pinhole(Point3D eye, Point3D lookat, Vector3D up,
 			float exposureTime, double d, double zoom) {
-		super(eye, lookat, ra, up, exposureTime);
+		super(eye, lookat, up, exposureTime);
 		this.d = d;
 		this.zoom = zoom;
 	}

@@ -30,8 +30,8 @@ public abstract class MeshTriangle extends GeometricObject {
 	// ---------------------------------------------------------------- constructor
 	// the normal is computed in Grid::read_file
 
-	public MeshTriangle(Mesh m,  int i0,  int i1,  int i2){
-		super();
+	public MeshTriangle(Mesh m,  int i0,  int i1,  int i2, RGBColor color){
+		super(color);
 		mesh = m;
 		index0 = i0;
 		index1 = i1;

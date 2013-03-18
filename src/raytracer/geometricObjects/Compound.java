@@ -39,6 +39,7 @@ public abstract class Compound extends GeometricObject {
 				tmin 			= t;
 				normal			= sr.normal;
 				localHitPoint	= sr.localHitPoint;  
+				color = obj.color;
 			}
 		}
 		
@@ -46,6 +47,7 @@ public abstract class Compound extends GeometricObject {
 			sr.t				= tmin;
 			sr.normal 			= normal;   
 			sr.localHitPoint 	= localHitPoint;  
+			sr.color = color;
 		}
 		
 		return (tmin);

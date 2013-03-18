@@ -182,7 +182,6 @@ public abstract class World {
 			if ((0 < t) && (t < tMin)) {
 				sr.hitAnObject	= true;
 				tMin 				= t; 
-				sr.color			= objects.get(j).color; 
 			}
 		}
 

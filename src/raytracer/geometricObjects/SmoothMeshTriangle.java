@@ -6,6 +6,7 @@ import raytracer.utilities.Normal;
 import raytracer.utilities.Point3D;
 import raytracer.utilities.Ray;
 import raytracer.utilities.ShadeRec;
+import raytracer.utilities.RGBColor;
 
 //Copyright (C) Helen Hu 2013.
 //based on C++ code from Ray Tracing from the Ground Up, by Kevin Suffern 
@@ -17,8 +18,8 @@ import raytracer.utilities.ShadeRec;
  * 	SmoothMeshTriangle is a MeshTriangle that uses smooth shading with an interpolated normal at each hit point
  */
 public class SmoothMeshTriangle extends MeshTriangle {
-	public SmoothMeshTriangle (Mesh mesh_ptr, int i0, int i1, int i2){
-		super(mesh_ptr, i0, i1, i2);
+	public SmoothMeshTriangle (Mesh mesh_ptr, int i0, int i1, int i2, RGBColor color){
+		super(mesh_ptr, i0, i1, i2, color);
 	}
 
 	protected Normal interpolateNormal(double beta, double gamma) {	
