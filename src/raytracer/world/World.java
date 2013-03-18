@@ -3,7 +3,8 @@ import raytracer.utilities.*;
 import raytracer.geometricObjects.*;
 import raytracer.tracers.*;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -30,7 +31,7 @@ public abstract class World {
 	public RGBColor					backgroundColor;
 	public Tracer					tracer;
 	public Sphere 					sphere;		// for Chapter 3 only
-	public Vector<GeometricObject>	objects;	
+	public List<GeometricObject>	objects;	
 	
 	private Graphics				graphics;   // for displaying to RayTracerGUI
 
@@ -49,7 +50,7 @@ public abstract class World {
 		backgroundColor = RGBColor.BLACK;
 		tracer= null;
 		sphere = new Sphere(new Point3D(0, 0, 0), 5, RGBColor.RED);
-		objects = new Vector<GeometricObject>();
+		objects = new ArrayList<GeometricObject>();
 	}
 
 	public void setGraphics(Graphics gr) {
@@ -97,7 +98,6 @@ public abstract class World {
 	public void renderScene()  {
 
 		RGBColor	pixelColor;	 	
-		Ray			ray;					
 		double		zw		= 100.0;			// hardwired in
 		double		x, y;
 

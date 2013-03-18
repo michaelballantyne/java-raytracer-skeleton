@@ -1,5 +1,6 @@
 package raytracer.utilities;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -24,69 +25,15 @@ import java.util.Vector;
  *
  */
 public class Mesh {
-	public Vector<Point3D> 			vertices;				// mesh vertices 
-	public Vector<Normal> 			normals;				// average normal at each vertex;
-	public Vector<Float>			u;						// u texture coordinate at each vertex
-	public Vector<Float>			v;						// v texture coordinate at each vertex
-	public Vector<Vector<Integer> > 	vertexFaces;			// the triangles shared by each vertex
-	public int 						numVertices; 			// number of vertices
-	public int 						numTriangles; 			// number of triangles
-	
-
-
-	// ----------------------------------------------------------------  default constructor
-
-	public Mesh(){
-		vertices = new Vector<Point3D>();
-		normals = new Vector<Normal>();
-		u = new Vector<Float>();
-		v = new Vector<Float>();
-		vertexFaces = new Vector<Vector<Integer>>();
-	 	numVertices = 0;
-	 	numTriangles = 0;
-	}
-
-	// ---------------------------------------------------------------- copy constructor
-	// this doesn't handle the vertex_faces
-
-	public Mesh(Mesh m) {
-		vertices = new Vector<Point3D>(m.vertices);
-		normals = new Vector<Normal>(m.normals);
-		u = new Vector<Float>(m.u);
-		v = new Vector<Float>(m.v);
-		numVertices = m.numVertices;
-		numTriangles = m.numTriangles;
-	}
-
-	// ---------------------------------------------------------------- assignment operator
-	// this doesn't handle the vertex_faces
-
-	public void set (Mesh rhs) {
-		if (this != rhs) {
-			vertices = new Vector<Point3D>(rhs.vertices);
-			normals = new Vector<Normal>(rhs.normals);
-			u  				= (Vector<Float>)rhs.u;
-			v  				= (Vector<Float>)rhs.v;
-			numVertices	= rhs.numVertices;
-			numTriangles	= rhs.numTriangles;
-		}
-	}
-
-	// not really a good idea to compare Meshes - this would take a long time!
-	// let's just compare the number of vertices & triangles
-	public boolean equals(Object obj) {
-		if (obj == null || this.getClass() != obj.getClass()) {
-			return false;
-		}
-		else {
-			Mesh other = (Mesh)obj;
-			return (numVertices == other.numVertices &&
-					numTriangles == other.numTriangles);
-		}
-	}
+	public List<Point3D> vertices = new ArrayList<Point3D>();				// mesh vertices 
+	public List<Normal> normals = new ArrayList<Normal>();				// average normal at each vertex;
+	public List<Float> u = new ArrayList<Float>();						// u texture coordinate at each vertex
+	public List<Float> v = new ArrayList<Float>();						// v texture coordinate at each vertex
+	public List<List<Integer>> vertexFaces;			// the triangles shared by each vertex
+	public int numTriangles = 0; 			// number of triangles
 	
 	public String toString() {
-		return "mesh with " + numVertices + " vertices and " + 
+		return "mesh with " + vertices.size() + " vertices and " + 
 		numTriangles + " triangles";
 	}	
 

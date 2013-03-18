@@ -3,7 +3,8 @@ package raytracer.geometricObjects;
 import raytracer.utilities.*;
 
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 //Copyright (C) Helen Hu 2013.
 //based on C++ code from Ray Tracing from the Ground Up, by Kevin Suffern 
@@ -17,35 +18,13 @@ import java.util.Vector;
  */
 
 public abstract class Compound extends GeometricObject {
-	protected Vector<GeometricObject> objects;
-	public Compound() {
-		super();
-		objects = new Vector<GeometricObject>();
-	}	
+	protected List<GeometricObject> objects = new ArrayList<GeometricObject>();
 
-
-	// ---------------------------------------------------------------- add_object
-
-	public void addObject(GeometricObject object) {
-		objects.add(object);	
-	}
-
-
-	//------------------------------------------------------------------ delete_objects
-	// Deletes the objects in the objects array, and erases the array.
-
-	private void deleteObjects() {
-		objects.clear();
-	}
-
-
-	/**Method reads in a triangle mesh from a SMF file, 
+	/** Method reads in a triangle mesh from a SMF file, 
 	 * and stores the indices and vertices in meshes/triangles
 	 * through helper methods
 	 */
 	public abstract void readSMFfile(String filename) throws IOException;
-
-	//------------------------------------------------------------------ hit
 
 	public double hit(Ray ray, ShadeRec sr) {
 		Normal		normal = null;
@@ -71,5 +50,4 @@ public abstract class Compound extends GeometricObject {
 		
 		return (tmin);
 	}
-
 }
