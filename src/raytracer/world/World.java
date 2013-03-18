@@ -176,15 +176,18 @@ public abstract class World {
 		double		t; 			
 		double		tMin 			= Constants.HUGE_VALUE;
 		int 		numObjects  	= objects.size();
+		RGBColor	frontColor = null;
 
 		for (int j = 0; j < numObjects; j++) {
+			sr.color = objects.get(j).color;
 			t = objects.get(j).hit(ray, sr);
 			if ((0 < t) && (t < tMin)) {
 				sr.hitAnObject	= true;
-				tMin 				= t; 
+				tMin 				= t;
+				frontColor = sr.color;
 			}
 		}
-
+		sr.color = frontColor;
 		return (sr);   
 	}
 
