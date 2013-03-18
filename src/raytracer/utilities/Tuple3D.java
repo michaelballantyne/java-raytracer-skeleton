@@ -7,13 +7,7 @@ package raytracer.utilities;
 //See the file COPYING.txt for the full license.
 
 public abstract class Tuple3D {
-
 	public final double x, y, z;
-	
-	public Tuple3D()						
-	{
-		x = y = z = 0;
-	}
 
 	public Tuple3D(double a, double b, double c)	 
 	{
@@ -36,5 +30,4 @@ public abstract class Tuple3D {
 		String className = this.getClass().getName();
 		return className.substring(className.lastIndexOf(".") + 1) + ": (" + x + "," + y + "," + z + ")";
 	}
-
 }

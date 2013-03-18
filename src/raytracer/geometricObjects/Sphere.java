@@ -14,8 +14,8 @@ public class Sphere extends GeometricObject {
 			
 	// ---------------------------------------------------------------- constructor
 	
-	public Sphere(Point3D c, double r) {
-		super();
+	public Sphere(Point3D c, double r, RGBColor color) {
+		super(color);
 		center = c;
 		radius = r;
 	}

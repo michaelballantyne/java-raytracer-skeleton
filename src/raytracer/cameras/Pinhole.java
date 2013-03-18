@@ -38,7 +38,7 @@ public class Pinhole extends Camera {
 	// ----------------------------------------------------------------------------- render_scene
 
 	public void renderScene(World w) {
-		RGBColor	L = new RGBColor();
+		RGBColor	L;
 		ViewPlane	vp = new ViewPlane(w.vp);	 								
 		Ray			ray;
 		int 		depth = 0;  
@@ -50,18 +50,18 @@ public class Pinhole extends Camera {
 			
 		for (int r = 0; r < vp.vres; r++)			// up
 			for (int c = 0; c < vp.hres; c++) {		// across 					
-				L.set(RGBColor.BLACK); 
+				L = (RGBColor.BLACK); 
 				
 				for (int p = 0; p < n; p++)			// up pixel
 					for (int q = 0; q < n; q++) {	// across pixel
 						pp.x = vp.s * (c - 0.5 * vp.hres + (q + 0.5) / n); 
 						pp.y = vp.s * (r - 0.5 * vp.vres + (p + 0.5) / n);
 						Vector3D rayDirection = getDirection(pp);
-						L.plusEqual(w.tracer.traceRay(new Ray(rayOrigin, rayDirection), depth));
+						L = L.add(w.tracer.traceRay(new Ray(rayOrigin, rayDirection), depth));
 					}	
 												
-				L.divideEqual(vp.numSamples);
-				L.timesEqual(exposureTime);
+				L = L.divide(vp.numSamples);
+				L = L.multiply(exposureTime);
 				w.displayPixel(r, c, L);
 			} 
 	}

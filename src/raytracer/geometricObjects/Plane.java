@@ -14,8 +14,8 @@ public class Plane extends GeometricObject {
 
 	// ----------------------------------------------------------------------  constructor
 
-	public Plane(Point3D point, Normal normal) {
-		super();
+	public Plane(Point3D point, Normal normal, RGBColor color) {
+		super(color);
 		a = point;
 		n = new Normal(normal.hat());
 	}

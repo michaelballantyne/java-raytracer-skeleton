@@ -48,7 +48,7 @@ public abstract class World {
 		vp = new ViewPlane();
 		backgroundColor = RGBColor.BLACK;
 		tracer= null;
-		sphere = new Sphere(new Point3D(0, 0, 0), 5);
+		sphere = new Sphere(new Point3D(0, 0, 0), 5, RGBColor.RED);
 		objects = new Vector<GeometricObject>();
 	}
 
@@ -119,9 +119,9 @@ public abstract class World {
 		float maxValue = Math.max(c.r, Math.max(c.g, c.b));
 
 		if (maxValue > 1.0)
-			return new RGBColor(c.divide(maxValue));
+			return c.divide(maxValue);
 		else
-			return new RGBColor(c);
+			return c;
 	}
 
 
@@ -129,13 +129,12 @@ public abstract class World {
 	// Set color to red if any component is greater than one
 
 	public RGBColor clampToColor(RGBColor rawColor) {
-		RGBColor c = new RGBColor(rawColor);
-
+		RGBColor result = rawColor;
 		if (rawColor.r > 1.0 || rawColor.g > 1.0 || rawColor.b > 1.0) {
-			c.r = 1.0f; c.g = 0.0f; c.b = 0.0f;
+			result = new RGBColor(1.0f, 0.0f, 0.0f);
 		}
 
-		return (c);
+		return result;
 	}
 
 
@@ -190,7 +189,7 @@ public abstract class World {
 			if ((0 < t) && (t < tMin)) {
 				sr.hitAnObject	= true;
 				tMin 				= t; 
-				sr.color			= objects.get(j).getColor(); 
+				sr.color			= objects.get(j).color; 
 			}
 		}
 

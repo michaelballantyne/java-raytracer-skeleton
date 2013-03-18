@@ -19,18 +19,15 @@ public class Scene3_18 extends World {
 
 		// use access functions to set centre and radius
 
-		Sphere sphere = new Sphere(new Point3D(0, -25, 0), 80);
-		sphere.setColor(1, 0, 0);  // red
+		Sphere sphere = new Sphere(new Point3D(0, -25, 0), 80, RGBColor.RED);
 		addObject(sphere);
 
 		// use constructor to set centre and radius 
 
-		sphere = new Sphere(new Point3D(0, 30, 0), 60);
-		sphere.setColor(1, 1, 0);	// yellow
+		sphere = new Sphere(new Point3D(0, 30, 0), 60, RGBColor.YELLOW);
 		addObject(sphere);
 
-		Plane plane_ptr = new Plane(new Point3D(0, 0, 0), new Normal(0, 1, 1));
-		plane_ptr.setColor(0.0f, 0.3f, 0.0f);	// dark green
+		Plane plane_ptr = new Plane(new Point3D(0, 0, 0), new Normal(0, 1, 1), new RGBColor(0.0f, 0.3f, 0.0f));
 		addObject(plane_ptr);
 	}
 

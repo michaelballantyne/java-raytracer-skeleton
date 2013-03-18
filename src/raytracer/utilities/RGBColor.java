@@ -8,9 +8,10 @@ package raytracer.utilities;
 
 
 public class RGBColor {
-	public float	r, g, b;	
-	public static final RGBColor BLACK = new RGBColor(0f);
-	public static final RGBColor WHITE = new RGBColor(1f);
+	public final float r, g, b;	
+	
+	public static final RGBColor BLACK = new RGBColor(0, 0, 0);
+	public static final RGBColor WHITE = new RGBColor(1, 1, 1);
 	public static final RGBColor RED = new RGBColor(1.0f, 0.0f, 0.0f);
 	public static final RGBColor YELLOW = new RGBColor(1f, 1f, 0f);										// yellow
 	public static final RGBColor BROWN = new RGBColor(0.71f, 0.40f, 0.16f);								// brown
@@ -23,59 +24,13 @@ public class RGBColor {
 	public static final RGBColor DARK_PURPLE = new RGBColor(0.5f, 0f, 1f);								// dark purple
 	public static final RGBColor CYAN = new RGBColor(0f, 0.5f, 0.75f);									// cyan
 	public static final RGBColor BLUE = new RGBColor(0f, 0f, 1f);										// blue
-	
-	// -------------------------------------------------------- default constructor
-	/**
-	 * default constructor sets the color 
-	 */
-	public RGBColor() {
-		r = g = b = 0f;    // black
-	}
 
-
-	// -------------------------------------------------------- constructor
-
-	/**
-	 * constructor sets the color to a grey scale value (with intensity c)
-	 * @param grey is grey scale intensity 
-	 */
-	public RGBColor(float grey) {
-		r = g = b = grey;
-	}
-									
-
-	// -------------------------------------------------------- constructor
 
 	public RGBColor(float newR, float newG, float newB)	{
 		r = newR;
 		g = newG;
 		b = newB;
 	}
-	
-	public RGBColor(double newR, double newG, double newB)	{
-		r = (float)newR;
-		g = (float)newG;
-		b = (float)newB;
-	}
-
-	// -------------------------------------------------------- copy constructor
-
-	public RGBColor(RGBColor c){
-		r = c.r;
-		g = c.g;
-		b = c.b;
-	}
-		
-
-	// --------------------------------------------------------assignment operator
-
-	public void set (RGBColor rhs) {
-		if (this != rhs) {
-			r = rhs.r; g = rhs.g; b = rhs.b;
-		}
-	}
-	 
-
 
 	// ----------------------------------------------------------------------- operator+
 	// addition of two colors
@@ -84,36 +39,12 @@ public class RGBColor {
 		return new RGBColor(r + c.r, g + c.g, b + c.b);
 	}
 
-
-	// ----------------------------------------------------------------------- operator+=
-	// compound addition of two colors
-
-	public void plusEqual (RGBColor c) {
-		r += c.r; g += c.g; b += c.b;
-	}
-
-
 	// ----------------------------------------------------------------------- operator*
 	// multiplication by a float on the right
 
 	public RGBColor multiply (float a) {
 		return new RGBColor (r * a, g * a, b * a);	
 	}
-	
-	// ----------------------------------------------------------------------- operator*
-	// multiplication by a double on the right (to avoid a type-cast)
-
-	public RGBColor multiply (double a) {
-		return new RGBColor (r * a, g * a, b * a);	
-	}
-
-	// ----------------------------------------------------------------------- operator*=
-	// compound multiplication by a float on the right
-
-	public void timesEqual (float a) {
-		r *= a; g *= a; b *= a;
-	}
-
 
 	// ----------------------------------------------------------------------- operator/
 	// division by float
@@ -121,16 +52,6 @@ public class RGBColor {
 	public RGBColor divide (float a) {
 		return new RGBColor (r / a, g / a, b / a);
 	}
-
-
-	// ----------------------------------------------------------------------- operator/=
-	// compound division by float
-
-	public void divideEqual (float a) {	
-		r /= a; g /= a; b /= a;
-	}
-
-
 
 	// ----------------------------------------------------------------------- operator*
 	// component-wise multiplication of two colors
@@ -167,7 +88,7 @@ public class RGBColor {
 	// used for color filtering in Chapter 28
 
 	public RGBColor powc(float p)  {
-		return new RGBColor(Math.pow(r, p), Math.pow(g, p), Math.pow(b, p));
+		return new RGBColor((float) Math.pow(r, p), (float) Math.pow(g, p), (float) Math.pow(b, p));
 	}
 
 	public boolean equals(Object obj) {

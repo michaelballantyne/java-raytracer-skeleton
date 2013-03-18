@@ -14,6 +14,6 @@ public class Scene3_11 extends World {
 		backgroundColor = RGBColor.BLACK;
 		tracer = new SingleSphere(this); 
 
-		sphere = new Sphere(new Point3D(0, 0, 0), 85.0);		
+		sphere = new Sphere(new Point3D(0, 0, 0), 85.0, RGBColor.RED);		
 	}
 }

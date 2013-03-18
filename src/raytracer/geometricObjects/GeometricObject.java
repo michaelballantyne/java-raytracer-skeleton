@@ -14,52 +14,17 @@ import raytracer.utilities.ShadeRec;
  */
 public abstract class GeometricObject {
 
-	protected RGBColor   color;						   // only used for Bare Bones ray tracing
+	public final RGBColor   color;						   // only used for Bare Bones ray tracing
 	protected static final double S_EPSILON = 0.001;   // for shadows and secondary rays
 
-	// ---------------------------------------------------------------------- default constructor
-
 	public GeometricObject() {
-		color = new RGBColor(RGBColor.BLACK);
+		color = null;
+	}
+	
+	public GeometricObject(RGBColor color) {
+		this.color = color;
 	}
 
-	// ---------------------------------------------------------------------- copy constructor
-
-	public GeometricObject (GeometricObject object) {
-		this.color = new RGBColor(object.color);	
-	}
-
-
-	// ---------------------------------------------------------------------- assignment operator
-
-	public void set (GeometricObject rhs) {
-
-		if (this != rhs) 
-			this.color.set(rhs.color);
-	}
-
-	public abstract double hit(Ray ray, ShadeRec s);
-
-
-	// --------------------------------------------------------------------  set_colour
-
-	public void setColor(RGBColor c) {
-		color.set(c);
-	}
-
-	// --------------------------------------------------------------------  set_colour
-
-	public void setColor(float r, float g, float b) {
-		color.r = r;
-		color.b = b;
-		color.g = g;
-	}
-
-	// --------------------------------------------------------------------  get_colour
-
-	public RGBColor getColor() {
-		return (color);
-	}
 
 	public boolean equals(Object obj) {
 		if (obj == null || this.getClass() != obj.getClass()) {
@@ -76,4 +41,7 @@ public abstract class GeometricObject {
 		return className.substring(className.lastIndexOf("."+1)) + 
 				" with color " + color;
 	}
+	
+	public abstract double hit(Ray ray, ShadeRec s);
+
 }
