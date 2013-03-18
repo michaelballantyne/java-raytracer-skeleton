@@ -12,63 +12,13 @@ public class Sphere extends GeometricObject {
 	private Point3D 	center;   			// center coordinates as a point  
 	private double 		radius;				// the radius 
 			
-	// ---------------------------------------------------------------- default constructor
-
-	public Sphere() {
-		super();
-		center = new Point3D(0.0);
-		radius = 1.0;
-	}
-	
 	// ---------------------------------------------------------------- constructor
 	
 	public Sphere(Point3D c, double r) {
 		super();
-		center = new Point3D(c);
+		center = c;
 		radius = r;
 	}
-
-
-	// ---------------------------------------------------------------- copy constructor
-
-	public Sphere (Sphere sphere) {
-		super(sphere);
-		center = new Point3D(sphere.center);
-		radius = sphere.radius;
-	}
-
-	// ---------------------------------------------------------------- clone
-
-	public Sphere clone() {
-		return (new Sphere(this));
-	}
-	
-
-	// ---------------------------------------------------------------- assignment operator
-
-	public void set (Sphere rhs) {
-		if (this != rhs) {
-			this.color.set(rhs.color);
-			this.center.set(rhs.center);
-			this.radius	= rhs.radius;	
-		}
-	}
-	
-
-	public void setCenter(Point3D c) {
-		center.set(c);
-	}
-			
-	public void setCenter(double x, double y, double z) {
-		center.x = x;
-		center.y = y;
-		center.z = z;
-	}
-			
-	public void setRadius(double r) {
-		radius = r;
-	}
-	
 
 	//---------------------------------------------------------------- hit
 	// textbook has it return a boolean

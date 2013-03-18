@@ -1,5 +1,6 @@
 package raytracer.world;
 
+import raytracer.geometricObjects.Sphere;
 import raytracer.tracers.SingleSphere;
 import raytracer.utilities.Point3D;
 import raytracer.utilities.RGBColor;
@@ -13,7 +14,6 @@ public class Scene3_11 extends World {
 		backgroundColor = RGBColor.BLACK;
 		tracer = new SingleSphere(this); 
 
-		sphere.setCenter(new Point3D(0.0));
-		sphere.setRadius(85.0);		
+		sphere = new Sphere(new Point3D(0, 0, 0), 85.0);		
 	}
 }

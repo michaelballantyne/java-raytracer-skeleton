@@ -8,25 +8,12 @@ package raytracer.utilities;
 
 public abstract class Tuple3D {
 
-	public double	x, y, z;
+	public final double x, y, z;
 	
-	// ---------------------------------------------------------- default constructor
-
 	public Tuple3D()						
 	{
 		x = y = z = 0;
 	}
-
-
-	// ---------------------------------------------------------- constructor
-
-	public Tuple3D(double a)
-	{
-		x = y = z = a;
-	}
-
-
-	// ---------------------------------------------------------- constructor
 
 	public Tuple3D(double a, double b, double c)	 
 	{
@@ -35,43 +22,19 @@ public abstract class Tuple3D {
 		z = c;
 	}
 
-
-	// ---------------------------------------------------------- copy constructor
-
-	public Tuple3D(Tuple3D t)
-	{
-		 x = t.x;
-		 y = t.y; 
-		 z = t.z;
-	}
-
-
-	// ----------------------------------------------------------- operator=
-	// assignment operator
-
-	public void set (Tuple3D rhs) {
-		if (this != rhs) {
-			x = rhs.x; y = rhs.y; z = rhs.z;
-		}
-	}
-	
-	public void set (double x, double y, double z) {
-		this.x = x; this.y = y; this.z = z;
-	}
-	
 	public boolean equals(Object obj) {
 		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		else {
-			Tuple3D other = (Tuple3D)obj;
-			return (this.x==other.x && this.y==other.y && this.z==other.z);
+			Tuple3D other = (Tuple3D) obj;
+			return (this.x == other.x && this.y == other.y && this.z == other.z);
 		}
 	}
 	
 	public String toString() {
 		String className = this.getClass().getName();
-		return className.substring(className.lastIndexOf(".")+1) + ": (" + x + "," + y + "," + z + ")";
+		return className.substring(className.lastIndexOf(".") + 1) + ": (" + x + "," + y + "," + z + ")";
 	}
 
 }

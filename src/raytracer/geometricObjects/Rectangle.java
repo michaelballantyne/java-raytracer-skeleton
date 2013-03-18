@@ -18,35 +18,19 @@
 		private Vector3D		b;				// side
 		private double			aLenSquared;	// square of the length of side a
 		private double			bLenSquared;	// square of the length of side b
-		private Normal			normal;	
-			
-		
-		// ----------------------------------------------------------------  default constructor
-	
-		public Rectangle() {
-			super();
-			p0 = new Point3D(-1, 0, -1);
-			a = new Vector3D(0, 0, 2);
-			b = new Vector3D(2, 0, 0);
-			aLenSquared = 4.0;
-			bLenSquared = 4.0;
-			normal = new Normal(0, 1, 0);
-		
-		}
-	
+		private Normal			normal;		
 	
 		// ----------------------------------------------------------------  constructor
 		// this constructs the normal
 	
 		public Rectangle(Point3D _p0, Vector3D _a, Vector3D _b) {
 			super();
-			p0 = new Point3D(_p0);
-			a = new Vector3D(_a);
-			b = new Vector3D(_b);
+			p0 = _p0;
+			a = _a;
+			b = _b;
 			aLenSquared = a.lenSquared(); 
 			bLenSquared = b.lenSquared();
-			normal = new Normal(a.cross(b));
-			normal.normalize();
+			normal = new Normal(a.cross(b).hat());
 		}
 	
 	
@@ -55,57 +39,14 @@
 	
 		public Rectangle(Point3D _p0, Vector3D _a, Vector3D _b, Normal n) {
 			super();
-			p0 = new Point3D(_p0);
-			a = new Vector3D(_a);
-			b = new Vector3D(_b);
-			normal = new Normal(n);
-			normal.normalize();
+			p0 = _p0;
+			a = _a;
+			b = _b;
+			normal = new Normal(n.hat());
 			aLenSquared = a.lenSquared(); 
 			bLenSquared = b.lenSquared();
 		}	
-	
-	
-		// ---------------------------------------------------------------- clone
-	
-		 
-		public Rectangle clone() {
-			return (new Rectangle(this));
-		}
-	
-	
-		// ---------------------------------------------------------------- copy constructor
-	
-		public Rectangle (Rectangle r) {
-			super(r);
-			p0 = new Point3D(r.p0);
-			a = new Vector3D(r.a);
-			b = new Vector3D(r.b);
-			normal = new Normal(r.normal);
-			aLenSquared = r.aLenSquared; 
-			bLenSquared = r.bLenSquared;
-		}	
-
-	
-	
-		// ---------------------------------------------------------------- assignment operator
-
-		public void set (Rectangle rhs) {
-			if (this != rhs){
-				super.set(rhs);
-				p0.set(rhs.p0);
-				a.set(rhs.a);
-				b.set(rhs.b);
-				normal.set(rhs.normal);
-
-				aLenSquared	= rhs.aLenSquared; 
-				bLenSquared	= rhs.bLenSquared;
-				
-			}
-		}
-	
-	
-		//------------------------------------------------------------------ hit 
-	 												 
+		 												 
 		public double hit(Ray ray, ShadeRec sr) {	
 			double t = normal.dot(p0.subtract(ray.o)) / 
 						normal.dot(ray.d);
@@ -131,10 +72,7 @@
 			
 			return (t);
 		}
-	
-
-		//------------------------------------------------------------------ get_normal 
-		 
+			 
 		public Normal get_normal (Point3D p) {
 			return (normal);
 		}

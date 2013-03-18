@@ -38,11 +38,6 @@ public abstract class GeometricObject {
 			this.color.set(rhs.color);
 	}
 
-	// ---------------------------------------------------------------------- abstract methods
-
-	// abstract copy constructor
-	public abstract GeometricObject clone();
-
 	public abstract double hit(Ray ray, ShadeRec s);
 
 

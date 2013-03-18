@@ -48,7 +48,7 @@ public abstract class World {
 		vp = new ViewPlane();
 		backgroundColor = RGBColor.BLACK;
 		tracer= null;
-		sphere = new Sphere();
+		sphere = new Sphere(new Point3D(0, 0, 0), 5);
 		objects = new Vector<GeometricObject>();
 	}
 
@@ -97,18 +97,18 @@ public abstract class World {
 	public void renderScene()  {
 
 		RGBColor	pixelColor;	 	
-		Ray			ray 	= new Ray();					
+		Ray			ray;					
 		double		zw		= 100.0;			// hardwired in
 		double		x, y;
 
-		ray.d = new Vector3D(0, 0, -1);
+		Vector3D direction = new Vector3D(0, 0, -1);
 
 		for (int r = 0; r < vp.vres; r++)			// up
 			for (int c = 0; c <= vp.hres; c++) {	// across 					
 				x = vp.s * (c - 0.5 * (vp.hres - 1.0));
 				y = vp.s * (r - 0.5 * (vp.hres - 1.0));
-				ray.o = new Point3D(x, y, zw);
-				pixelColor = tracer.traceRay(ray);
+				Point3D origin = new Point3D(x, y, zw);
+				pixelColor = tracer.traceRay(new Ray(origin, direction));
 				displayPixel(r, c, pixelColor);
 			}	
 	}  

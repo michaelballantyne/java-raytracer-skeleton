@@ -15,64 +15,12 @@ public class Triangle extends GeometricObject {
 	private	Point3D	v0, v1, v2;
 	private Normal	normal;
 
-	// ----------------------------------------------------------------  default constructor
-
-	public Triangle(){
-		super();
-		v0 = new Point3D(0,0,0);
-		v1 = new Point3D(0,0,1);
-		v2 = new Point3D(1,0,0);
-		normal = new Normal(0,1,0);
-	}
-
-	// ---------------------------------------------------------------- constructor
-
 	public Triangle (Point3D a, Point3D b, Point3D c){
-		super();
-		v0 = new Point3D(a);
-		v1 = new Point3D(b);
-		v2 = new Point3D(c);
-		this.computeNormal();	
+		v0 = a;
+		v1 = b;
+		v2 = c;
+		normal = (new Normal((v1.subtract(v0)).cross(v2.subtract(v0)).hat()));  
 	}
-
-
-	// ---------------------------------------------------------------- copy constructor
-
-	public Triangle (Triangle triangle){
-		super(triangle);
-		v0 = new Point3D(triangle.v0);
-		v1 = new Point3D(triangle.v1);
-		v2 = new Point3D(triangle.v2);
-		normal = new Normal(triangle.normal);
-	}
-
-	// ---------------------------------------------------------------- clone
-
-	public Triangle clone() {
-		return (new Triangle(this));
-	}
-
-	// ---------------------------------------------------------------- assignment operator
-
-	public void set(Triangle rhs) {
-		if (this != rhs) {
-			super.set(rhs);
-			v0.set(rhs.v0);
-			v1.set(rhs.v1);
-			v2.set(rhs.v2);
-			normal.set(rhs.normal);
-		}
-	}
-
-
-	// ---------------------------------------------------------------- compute_normal
-
-	protected void computeNormal() {
-		normal = new Normal((v1.subtract(v0)).cross(v2.subtract(v0)));  
-		normal.normalize();
-	}
-
-	// ------------------------------------------------------------------------------ hit
 
 	public double hit(Ray ray, ShadeRec sr) {	
 		double a = v0.x - v1.x, b = v0.x - v2.x, c = ray.d.x, d = v0.x - ray.o.x; 

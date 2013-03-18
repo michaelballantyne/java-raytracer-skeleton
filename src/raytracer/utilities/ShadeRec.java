@@ -20,34 +20,7 @@ public class ShadeRec {
 
 	public ShadeRec(World wr) { 
 		hitAnObject = false;
-		localHitPoint = new Point3D();
-		normal = new Normal();
-		color = new RGBColor(RGBColor.BLACK);
 		w = wr;
-	}
-
-	// ------------------------------------------------------------------ copy constructor
-
-	public ShadeRec(ShadeRec sr) {
-		hitAnObject = sr.hitAnObject;
-		localHitPoint = new Point3D(sr.localHitPoint);
-		normal = new Normal();
-		color = new RGBColor(sr.color);
-		w = sr.w;	
-	}
-	
-	public boolean equals(Object obj) {
-		if (obj == null || this.getClass() != obj.getClass()) {
-			return false;
-		}
-		else {
-			ShadeRec other = (ShadeRec)obj;
-			return (this.hitAnObject==other.hitAnObject && 
-					this.equals(other.localHitPoint) && 
-					this.normal.equals(other.normal) &&
-					this.color.equals(other.color)  &&
-					this.w == other.w);
-		}
 	}
 	
 	public String toString() {

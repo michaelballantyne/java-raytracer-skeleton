@@ -13,41 +13,9 @@ import raytracer.utilities.*;
  * FlatMeshTriangle is a MeshTriangle that uses flat shading with one normal for each triangle
  */
 public class FlatMeshTriangle extends MeshTriangle {
-	// This uses the inherited shadow hit function from MeshTriangle
-
-	// ----------------------------------------------------------------  default constructor
-
-	public FlatMeshTriangle() {
-		super();
-	}
-
-
-	// ---------------------------------------------------------------- constructor
-
 	public FlatMeshTriangle (Mesh m, int i0, int i1, int i2) {
 		super(m, i0, i1, i2);
 	}
-
-
-	// ---------------------------------------------------------------- copy constructor
-
-	public FlatMeshTriangle(FlatMeshTriangle fmt) {
-		super(fmt);
-	}
-
-	// ---------------------------------------------------------------- clone
-
-	public FlatMeshTriangle clone() {
-		return (new FlatMeshTriangle(this));
-	}
-
-	// ---------------------------------------------------------------- assignment operator
-
-	public void set (FlatMeshTriangle rhs) {
-		super.set(rhs);
-	}
-
-	// ---------------------------------------------------------------- hit
 
 	public double hit(Ray ray, ShadeRec sr) {
 			Point3D v0 = mesh.vertices.get(index0);

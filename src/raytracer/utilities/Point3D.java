@@ -8,25 +8,8 @@ package raytracer.utilities;
 
 
 public class Point3D extends Tuple3D {
-
-	// --------------------------------------------- default constructor
-	public Point3D(){
-		super();
-	}
-
-	// --------------------------------------------- constructor
-	public Point3D(double a){
-		super(a);
-	}
-
-	// --------------------------------------------- constructor
 	public Point3D(double a, double b, double c){
 		super(a,b,c);
-	}
-
-	// --------------------------------------------- constructor
-	public Point3D(Point3D p){
-		super(p);
 	}
 
 	// --------------------------------------------- distance
@@ -162,4 +145,4 @@ public class Point3D extends Tuple3D {
 				+ (p1.z - p2.z) * (p1.z - p2.z) );
 	}
 
-} // end Point3D class
+}

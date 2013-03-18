@@ -17,56 +17,16 @@ import raytracer.utilities.ShadeRec;
  * 	SmoothMeshTriangle is a MeshTriangle that uses smooth shading with an interpolated normal at each hit point
  */
 public class SmoothMeshTriangle extends MeshTriangle {
-
-	// ----------------------------------------------------------------  default constructor
-
-	public SmoothMeshTriangle(){
-		super();
-	}
-
-
-	// ---------------------------------------------------------------- constructor
-
 	public SmoothMeshTriangle (Mesh mesh_ptr, int i0, int i1, int i2){
 		super(mesh_ptr, i0, i1, i2);
 	}
 
-
-	// ---------------------------------------------------------------- clone
-
-	public SmoothMeshTriangle clone () {
-		return (new SmoothMeshTriangle (this));
-	}
-
-
-	// ---------------------------------------------------------------- copy constructor
-
-	public SmoothMeshTriangle (SmoothMeshTriangle fmt) {
-		super(fmt);
-	}
-
-
-	// ---------------------------------------------------------------- assignment operator
-
-	public void set(SmoothMeshTriangle rhs) {
-		if (this != rhs)
-			super.set(rhs);
-	}
-
-
-	// ---------------------------------------------------------------- interpolate_normal
-
 	protected Normal interpolateNormal(double beta, double gamma) {	
 		double alpha = 1 - beta - gamma;
-		Normal normal = new Normal(mesh.normals.get(index0).multiply(alpha).add
+		return new Normal(mesh.normals.get(index0).multiply(alpha).add
 				(mesh.normals.get(index1).multiply(beta).add
-						(mesh.normals.get(index2).multiply(gamma))));
-		normal.normalize();
-
-		return(normal);
+						(mesh.normals.get(index2).multiply(gamma))).hat());
 	}
-
-	// ---------------------------------------------------------------- hit
 
 	public double hit(Ray ray, ShadeRec sr) {
 		Point3D v0 = mesh.vertices.get(index0);

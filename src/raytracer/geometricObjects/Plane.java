@@ -11,48 +11,13 @@ import raytracer.utilities.*;
 public class Plane extends GeometricObject {
 	private Point3D 	a;   				// point through which plane passes 
 	private Normal 		n;					// normal to the plane
-					
-	// ----------------------------------------------------------------------  default constructor
-
-	public Plane() {	
-		super();
-		a = new Point3D(0.0);
-		n = new Normal(0, 1, 0);						
-	}
 
 	// ----------------------------------------------------------------------  constructor
 
 	public Plane(Point3D point, Normal normal) {
 		super();
-		a = new Point3D(point);
-		n = new Normal(normal);
-		n.normalize();
-	}
-
-	// ---------------------------------------------------------------- copy constructor
-
-	public Plane(Plane plane) {
-		super(plane);
-		a = new Point3D(plane.a);
-		n = new Normal(plane.n); 				
-	}
-
-	// ---------------------------------------------------------------- clone
-
-	public GeometricObject clone() {
-		return (new Plane(this));
-
-	}
-
-	// ---------------------------------------------------------------- assignment operator
-
-	public void set (Plane rhs)	{
-		
-		if (this != rhs) {
-			super.set(rhs);
-			a.set(rhs.a);
-			n.set(rhs.n);
-		}
+		a = point;
+		n = new Normal(normal.hat());
 	}
 
 	// ----------------------------------------------------------------- hit

@@ -7,42 +7,14 @@ package raytracer.utilities;
 //See the file COPYING.txt for the full license.
 
 public class Normal extends Vector3D {
-	
-	// ---------------------------------------------------------- default constructor
-
-	public Normal()						
-	{
-		super();
-	}
-
-
-	// ---------------------------------------------------------- constructor
-
-	public Normal(double a)
-	{
-		super(a);
-	}
-
-
-	// ---------------------------------------------------------- constructor
-
 	public Normal(double a, double b, double c)	 
 	{
 		super(a,b,c);
 	}
-
-	// ---------------------------------------------------------- copy constructor
-
-	/**
-	 * copy constructor: construct a Normal from a Vector3D or another Normal
-	 * @param v
-	 */
-	public Normal(Vector3D v) {
-		super(v);
+	
+	public Normal(Vector3D vector) {
+		super(vector.x, vector.y, vector.z);
 	}
-
-
-	// ----------------------------------------------------------------------- operator-
 
 	/** 
 	 * unary minus

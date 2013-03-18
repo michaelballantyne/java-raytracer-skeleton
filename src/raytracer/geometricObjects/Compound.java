@@ -23,24 +23,6 @@ public abstract class Compound extends GeometricObject {
 		objects = new Vector<GeometricObject>();
 	}	
 
-	// ---------------------------------------------------------------- copy constructor
-
-	public Compound(Compound c)
-	{
-		super(c);
-		copyObjects(c.objects);					
-	}
-
-
-//	---------------------------------------------------------------- assignment operator
-
-	public void set (Compound rhs) {
-		if (this != rhs) {
-			super.set(rhs);
-			copyObjects(rhs.objects);				
-		}
-	}
-
 
 	// ---------------------------------------------------------------- add_object
 
@@ -56,14 +38,6 @@ public abstract class Compound extends GeometricObject {
 		objects.clear();
 	}
 
-
-	//------------------------------------------------------------------ copy_objects
-
-	private void copyObjects(Vector<GeometricObject> rhsObjects) {
-		deleteObjects();    	
-		for (GeometricObject new_object : rhsObjects)
-			objects.add(new_object.clone());
-	}
 
 	/**Method reads in a triangle mesh from a SMF file, 
 	 * and stores the indices and vertices in meshes/triangles
