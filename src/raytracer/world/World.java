@@ -33,12 +33,8 @@ public abstract class World {
 	public Sphere 					sphere;		// for Chapter 3 only
 	public List<GeometricObject>	objects;	
 	
-	private Graphics				graphics;   // for displaying to RayTracerGUI
-
 	// for saving image
 	public BufferedImage image;
-	protected WritableRaster raster;
-	protected ColorModel model;
 
 	protected static final int ROWS = 300, COLS = 300;
 
@@ -53,9 +49,6 @@ public abstract class World {
 		objects = new ArrayList<GeometricObject>();
 	}
 
-	public void setGraphics(Graphics gr) {
-		graphics = gr;
-	}
 
 	// ------------------------------------------------------------------ add_object
 
@@ -85,8 +78,6 @@ public abstract class World {
 
 		// for saving the image to a file
 		image = new BufferedImage(vp.hres,vp.vres, BufferedImage.TYPE_INT_RGB);
-		raster = image.getRaster();
-		model = image.getColorModel();
 
 		return resolution;
 	}
