@@ -23,7 +23,7 @@ public class RayTracerGUI extends JPanel implements Runnable {
 
 	public RayTracerGUI () {
 		// modify this line if you want to create different scenes
-		world = new Scene3_11();
+		world = new Chapter3Cover();
 		int[] dimensions = world.build();
 		width = dimensions[0];
 		height = dimensions[1];
@@ -122,11 +122,9 @@ public class RayTracerGUI extends JPanel implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-		world.setGraphics(g);
-
 		long time = System.currentTimeMillis();
 		world.renderScene();
-		g.drawImage(screen, 0, 0, this);        // doing this less often speed things up a bit
+		g.drawImage(world.image, 0, 0, this);        // doing this less often speed things up a bit
 
 		time = System.currentTimeMillis() - time;
 		System.out.println("Rendered in "+(time/60000)+":"+((time%60000)*0.001));

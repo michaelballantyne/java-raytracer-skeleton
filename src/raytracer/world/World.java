@@ -104,7 +104,7 @@ public abstract class World {
 		Vector3D direction = new Vector3D(0, 0, -1);
 
 		for (int r = 0; r < vp.vres; r++)			// up
-			for (int c = 0; c <= vp.hres; c++) {	// across 					
+			for (int c = 0; c < vp.hres; c++) {	// across 					
 				x = vp.s * (c - 0.5 * (vp.hres - 1.0));
 				y = vp.s * (r - 0.5 * (vp.hres - 1.0));
 				Point3D origin = new Point3D(x, y, zw);
@@ -169,8 +169,10 @@ public abstract class World {
 				(int)(mappedColor.g * 255),
 				(int)(mappedColor.b * 255));
 
-		graphics.setColor(color);
-		graphics.fillRect(x, y, 1, 1);
+		image.setRGB(x, y, color.getRGB());
+
+//		graphics.setColor(color);
+//		graphics.fillRect(x, y, 1, 1);
 
 		
 	}
