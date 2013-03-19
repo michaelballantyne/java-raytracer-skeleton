@@ -9,41 +9,38 @@ import raytracer.world.World;
 //This Java code is licensed under the GNU General Public License Version 2.
 //See the file COPYING.txt for the full license.
 
-
 public class MultipleObjects extends Tracer {
-
-	// -------------------------------------------------------------------- default constructor
-
-	public MultipleObjects() {
-		super();
-	}
-
-	// -------------------------------------------------------------------- constructor
-
 	public MultipleObjects(World world) {
 		super(world);
 	}
 
-
-
-	// -------------------------------------------------------------------- trace_ray
-
 	public RGBColor traceRay(Ray ray) {
-		if (world != null) {
-			ShadeRec sr = world.hitBareBonesObjects(ray); 
+		ShadeRec sr = hitBareBonesObjects(ray); 
 
-			if (sr.hitAnObject)   
-				return (sr.color);   
-			else
-				return (world.backgroundColor);
+		if (sr.hitAnObject) {
+			return sr.color;   
+		} else {
+			return world.backgroundColor;
 		}
-		return RGBColor.BLACK;
 	}
+	
+	public ShadeRec hitBareBonesObjects(Ray ray) {
+		ShadeRec	sr = new ShadeRec(world); 
+		double		t; 			
+		double		tMin 			= Constants.HUGE_VALUE;
+		int 		numObjects  	= world.objects.size();
+		RGBColor	frontColor = null;
 
-	// -------------------------------------------------------------------- trace_ray
-
-	public RGBColor traceRay(Ray ray, int depth) {
-		return traceRay(ray);
+		for (int j = 0; j < numObjects; j++) {
+			sr.color = world.objects.get(j).color;
+			t = world.objects.get(j).hit(ray, sr);
+			if ((0 < t) && (t < tMin)) {
+				sr.hitAnObject	= true;
+				tMin 				= t;
+				frontColor = sr.color;
+			}
+		}
+		sr.color = frontColor;
+		return sr;   
 	}
-
 }

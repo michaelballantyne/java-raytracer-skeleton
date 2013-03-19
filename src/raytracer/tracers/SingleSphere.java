@@ -10,36 +10,22 @@ import raytracer.world.World;
 //See the file COPYING.txt for the full license.
 
 public class SingleSphere extends Tracer {
-
-	// -------------------------------------------------------------------- default constructor
-
-	public SingleSphere() {
-		super();
-	}
-
-
-	// -------------------------------------------------------------------- constructor
-
 	public SingleSphere(World world){
 		super(world);
 	}
 
-	// -------------------------------------------------------------------- trace_ray
-
 	public RGBColor traceRay(Ray ray) {
-		ShadeRec	sr = new ShadeRec(world); 	// not used
-		double    	t = world.sphere.hit(ray, sr);  				// not used
+		ShadeRec	sr = new ShadeRec(world);
+		double    	t = world.sphere.hit(ray, sr);
 			
-		if (t > 0)		
-			return (RGBColor.RED);  
-		else
-			return (RGBColor.BLACK);   
+		if (t > 0) {
+			return RGBColor.RED; 
+		} else {
+			return RGBColor.BLACK;   
+		}
 	}
 
-	// -------------------------------------------------------------------- trace_ray
-	
 	public RGBColor traceRay(Ray ray, int depth) {
-		return (RGBColor.BLACK);
+		return RGBColor.BLACK;
 	}
-
 }

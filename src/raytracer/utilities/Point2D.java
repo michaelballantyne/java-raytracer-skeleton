@@ -1,7 +1,6 @@
 package raytracer.utilities;
 
-//2D points are used to store sample points
-
+/** Used to store sample points. */
 public class Point2D {
 	public final double x, y;
 

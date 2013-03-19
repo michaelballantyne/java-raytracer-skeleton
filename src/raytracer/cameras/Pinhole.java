@@ -1,6 +1,4 @@
 package raytracer.cameras;
-import java.util.ArrayList;
-import java.util.List;
 
 import raytracer.utilities.*;
 import raytracer.world.*;
@@ -12,21 +10,15 @@ import raytracer.world.*;
 //See the file COPYING.txt for the full license.
 
 public class Pinhole extends Camera {
-
+	private double d;		// view plane distance
+	private double zoom;	// zoom factor
+	
 	public Pinhole(Point3D eye, Point3D lookat, Vector3D up,
 			float exposureTime, double d, double zoom) {
 		super(eye, lookat, up, exposureTime);
 		this.d = d;
 		this.zoom = zoom;
 	}
-
-
-
-	private double	d;		// view plane distance
-	private double	zoom;	// zoom factor
-
-
-	// ----------------------------------------------------------------------------- get_direction
 
 	public Vector3D getDirection(Point2D p) {
 		Vector3D temp1 = u.multiply(p.x);
@@ -36,34 +28,30 @@ public class Pinhole extends Camera {
 		return(dir);
 	}
 
-
-
-	// ----------------------------------------------------------------------------- render_scene
-
 	public void renderScene(World w) {
 		RGBColor	L;
 		ViewPlane	vp = new ViewPlane(w.vp);	 								
-		int 		depth = 0;  
 		int n = (int)Math.sqrt((float)vp.numSamples);
 			
 		vp.s /= zoom;
-		Point3D rayOrigin = eye;
 			
-		for (int r = 0; r < vp.vres; r++)			// up
-			for (int c = 0; c < vp.hres; c++) {		// across 					
+		for (int row = 0; row < vp.vres; row++) {			// up
+			for (int column = 0; column < vp.hres; column++) {		// across 					
 				L = (RGBColor.BLACK); 
 				
-				for (int p = 0; p < n; p++)			// up pixel
+				for (int p = 0; p < n; p++)	 {		// up pixel
 					for (int q = 0; q < n; q++) {	// across pixel
-						double x = vp.s * (c - 0.5 * vp.hres + (q + 0.5) / n); 
-						double y = vp.s * (r - 0.5 * vp.vres + (p + 0.5) / n);
+						double x = vp.s * (column - 0.5 * vp.hres + (q + 0.5) / n); 
+						double y = vp.s * (row - 0.5 * vp.vres + (p + 0.5) / n);
 						Vector3D rayDirection = getDirection(new Point2D(x, y));
-						L = L.add(w.tracer.traceRay(new Ray(rayOrigin, rayDirection), depth));
+						L = L.add(w.tracer.traceRay(new Ray(eye, rayDirection)));
 					}	
+				}
 												
 				L = L.divide(vp.numSamples);
 				L = L.multiply(exposureTime);
-				w.displayPixel(r, c, L);
+				w.displayPixel(row, column, L);
 			} 
+		}
 	}
 }

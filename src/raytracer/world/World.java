@@ -16,16 +16,6 @@ import java.awt.image.WritableRaster;
 //This Java code is licensed under the GNU General Public License Version 2.
 //See the file COPYING.txt for the full license.
 
-
-//This file contains the declaration of the class World
-//The World class does not have a copy constructor or an assignment operator, for the following reasons:
-
-//1 	There's no need to copy construct or assign the World
-//2 	We wouldn't want to do this anyway, because the world can contain an arbitrary amount of data
-//3 	These operations wouldn't work because the world is self-referencing:
-//	 	the Tracer base class contains a pointer to the world. If we wrote a correct copy constructor for the 
-//	  	Tracer class, the World copy constructor would call itself recursively until we ran out of memory. 
-
 public abstract class World {
 	public ViewPlane				vp;
 	public RGBColor					backgroundColor;
@@ -33,34 +23,22 @@ public abstract class World {
 	public Sphere 					sphere;		// for Chapter 3 only
 	public List<GeometricObject>	objects;	
 	
-	// for saving image
 	public BufferedImage image;
 
 	protected static final int ROWS = 300, COLS = 300;
-
-
-	// -------------------------------------------------------------------- default constructor
 
 	public World(){
 		vp = new ViewPlane();
 		backgroundColor = RGBColor.BLACK;
 		tracer= null;
-		sphere = new Sphere(new Point3D(0, 0, 0), 5, RGBColor.RED);
 		objects = new ArrayList<GeometricObject>();
 	}
-
-
-	// ------------------------------------------------------------------ add_object
 
 	public void addObject(GeometricObject object) {  
 		objects.add(object);	
 	}
 
-	// ------------------------------------------------------------------ build
-
-	/*
-	 * implement this method if you want to build different items
-	 */
+	/** Implement this method if you want to build a scene. */
 	protected abstract void buildScene();
 
 	public int[] build()
@@ -82,10 +60,7 @@ public abstract class World {
 		return resolution;
 	}
 	
-	//------------------------------------------------------------------ render_scene
-
-	// This uses orthographic viewing along the zw axis
-
+	/** This uses orthographic viewing along the zw axis. */
 	public void renderScene()  {
 
 		RGBColor	pixelColor;	 	
@@ -104,8 +79,7 @@ public abstract class World {
 			}	
 	}  
 
-	// ------------------------------------------------------------------ clamp
-
+	/** Normalizes the color such that its maximum component is not larger than one. */
 	public RGBColor maxToOne(RGBColor c) {
 		float maxValue = Math.max(c.r, Math.max(c.g, c.b));
 
@@ -116,9 +90,7 @@ public abstract class World {
 	}
 
 
-	// ------------------------------------------------------------------ clamp_to_color
-	// Set color to red if any component is greater than one
-
+	/** Set color to red if any component is greater than one. */
 	public RGBColor clampToColor(RGBColor rawColor) {
 		RGBColor result = rawColor;
 		if (rawColor.r > 1.0 || rawColor.g > 1.0 || rawColor.b > 1.0) {
@@ -128,78 +100,34 @@ public abstract class World {
 		return result;
 	}
 
-
-	// ---------------------------------------------------------------------------display_pixel
-
-	// rawColor is the pixel color computed by the ray tracer
-	// its RGB floating point components can be arbitrarily large
-	// mappedColor has all components in the range [0, 1], but still floating point
-	// display color has integer components for computer display
-	// the Mac's components are in the range [0, 65535]
-	// a PC's components will probably be in the range [0, 255]
-	// the system-dependent code is in the function convert_to_display_color
-
-
+	/**
+	 * Normalizes the color value and colors the pixel in the image.
+	 * @param rawColor The pixel color computed by the ray tracer, with arbitrarily large RGB values.
+	 */
 	public void displayPixel(int row, int column, RGBColor rawColor) {
+		// will have all components in the range [0, 1], but is still floating point
 		RGBColor mappedColor;
 
-		if (vp.showOutOfGamut)
+		if (vp.showOutOfGamut) {
 			mappedColor = clampToColor(rawColor);
-		else
+		} else {
 			mappedColor = maxToOne(rawColor);
-
-		if (vp.gamma != 1.0)
+		}
+		
+		if (vp.gamma != 1.0) {
 			mappedColor = mappedColor.powc(vp.invGamma);
+		}
 
-		//have to start from max y coordinate to convert to screen coordinates
+		// have to start from max y coordinate to convert to screen coordinates
 		int x = column;
 		int y = vp.vres - row - 1;
 
-		// for Java window
-		Color color = new Color((int)(mappedColor.r * 255),
+		// Java color, with each component an int in the range [0, 255]
+		Color displayColor = new Color((int)(mappedColor.r * 255),
 				(int)(mappedColor.g * 255),
 				(int)(mappedColor.b * 255));
 
-		image.setRGB(x, y, color.getRGB());
-
-//		graphics.setColor(color);
-//		graphics.fillRect(x, y, 1, 1);
-
-		
+		image.setRGB(x, y, displayColor.getRGB());
 	}
-
-
-	// ----------------------------------------------------------------------------- hit_bare_bones_objects
-
-	public ShadeRec hitBareBonesObjects(Ray ray) {
-		ShadeRec	sr = new ShadeRec(this); 
-		double		t; 			
-		double		tMin 			= Constants.HUGE_VALUE;
-		int 		numObjects  	= objects.size();
-		RGBColor	frontColor = null;
-
-		for (int j = 0; j < numObjects; j++) {
-			sr.color = objects.get(j).color;
-			t = objects.get(j).hit(ray, sr);
-			if ((0 < t) && (t < tMin)) {
-				sr.hitAnObject	= true;
-				tMin 				= t;
-				frontColor = sr.color;
-			}
-		}
-		sr.color = frontColor;
-		return (sr);   
-	}
-
-
-	//------------------------------------------------------------------ delete_objects
-
-	// Deletes the objects in the objects array, and erases the array.
-	// The objects array still exists, because it's an automatic variable, but it's empty 
-
-	public void deleteObjects() {
-		objects.clear();
-	}
-
 }
 

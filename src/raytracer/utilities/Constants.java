@@ -13,5 +13,4 @@ public class Constants {
 	public static final double INV_TWO_PI 	= 1./(Math.PI*2);
 	public static final double EPSILON 		= 0.0001; 
 	public static final double HUGE_VALUE	= 1.0E10;
-	
 }
