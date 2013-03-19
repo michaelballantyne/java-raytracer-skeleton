@@ -1,5 +1,6 @@
 package raytracer.tracers;
 
+import raytracer.geometricObjects.GeometricObject;
 import raytracer.utilities.*;
 import raytracer.world.World;
 
@@ -25,22 +26,22 @@ public class MultipleObjects extends Tracer {
 	}
 	
 	public ShadeRec hitBareBonesObjects(Ray ray) {
-		ShadeRec	sr = new ShadeRec(world); 
-		double		t; 			
-		double		tMin 			= Constants.HUGE_VALUE;
-		int 		numObjects  	= world.objects.size();
-		RGBColor	frontColor = null;
+		ShadeRec sr = new ShadeRec(world); 
+		double tMin = Double.MAX_VALUE;
+		RGBColor frontColor = null;
 
-		for (int j = 0; j < numObjects; j++) {
-			sr.color = world.objects.get(j).color;
-			t = world.objects.get(j).hit(ray, sr);
+		for (GeometricObject object : world.objects) {
+			sr.color = object.color;
+			double t = object.hit(ray, sr);
 			if ((0 < t) && (t < tMin)) {
-				sr.hitAnObject	= true;
-				tMin 				= t;
+				sr.hitAnObject = true;
+				tMin = t;
 				frontColor = sr.color;
 			}
 		}
+		
 		sr.color = frontColor;
+		
 		return sr;   
 	}
 }
