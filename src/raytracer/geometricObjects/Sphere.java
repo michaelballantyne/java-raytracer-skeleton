@@ -26,7 +26,7 @@ public class Sphere extends GeometricObject {
 	// hit returns a -1 if no hit
 	// hit returns a number > 0 if hit
 	
-	public double hit(Ray ray, ShadeRec sr) {
+	public HitInfo hit(Ray ray) {
 		double 		t;
 		Vector3D	temp 	= ray.origin.subtract(center);
 		double 		a 		= ray.direction.dot(ray.direction);
@@ -34,38 +34,35 @@ public class Sphere extends GeometricObject {
 		double 		c 		= temp.dot(temp) - (radius * radius);
 		double 		disc	= b * b - 4.0 * a * c;
 		
-		if (disc < 0.0)
-			return(-1.0);  // no hit
-		else {	
+		if (disc < 0.0) {
+			return null;  // no hit
+		} else {	
 			double e = Math.sqrt(disc);
 			double denom = 2.0 * a;
 			t = (-b - e) / denom;    // smaller root
 		
 			if (t > S_EPSILON) {
-				sr.normal 	 = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
-				sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
-				sr.color = color;
-				return (t);
+				Normal normal = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
+				Point3D localHitPoint = ray.origin.add(ray.direction.multiply(t));
+				return new HitInfo(normal, localHitPoint, color, t);
 			} 
 		
 			t = (-b + e) / denom;    // larger root
 		
 			if (t > S_EPSILON) {
-				sr.normal 	 = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
-				sr.localHitPoint = ray.origin.add(ray.direction.multiply(t));
-				sr.color = color;
-				return (t);
+				Normal normal = new Normal(temp.add(ray.direction.multiply(t)).divide(radius));
+				Point3D localHitPoint = ray.origin.add(ray.direction.multiply(t));
+				return new HitInfo(normal, localHitPoint, color, t);
 			} 
 		}
 		
-		return (-1.0); // no hit
+		return null; // no hit
 	}
 	
 	public boolean equals(Object obj) {
 		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
-		}
-		else {
+		} else {
 			Sphere other = (Sphere)obj;
 			return (super.equals(obj) 
 					&& center.equals(other.center)

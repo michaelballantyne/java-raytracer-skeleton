@@ -17,12 +17,7 @@ public class FlatMeshTriangle extends MeshTriangle {
 		super(m, i0, i1, i2, color);
 	}
 
-	public double hit(Ray ray, ShadeRec sr) {
-		// Optimization assuming complete triangle mesh. Ignore trangle faces with normals pointing away from camera. 
-		if (normal.dot(ray.direction) > 0) {
-			return (-1.0);
-		}
-
+	public HitInfo hit(Ray ray) {
 		Point3D v0 = mesh.vertices.get(index0);
 		Point3D v1 = mesh.vertices.get(index1);
 		Point3D v2 = mesh.vertices.get(index2);
@@ -39,29 +34,32 @@ public class FlatMeshTriangle extends MeshTriangle {
 		double e1 = d * m - b * n - c * p;
 		double beta = e1 * inv_denom;
 
-		if (beta < 0.0)
-			return (-1.0);
+		if (beta < 0.0) {
+			return null;
+		}
 
 		double r = e * l - h * i;
 		double e2 = a * n + d * q + c * r;
 		double gamma = e2 * inv_denom;
 
-		if (gamma < 0.0)
-			return (-1.0);
+		if (gamma < 0.0) {
+			return null;
+		}
 
-		if (beta + gamma > 1.0)
-			return (-1.0);
+		if (beta + gamma > 1.0) {
+			return null;
+		}
 
 		double e3 = a * p - b * r + d * s;
 		double t = e3 * inv_denom;
 
-		if (t < Constants.EPSILON)
-			return (-1.0);
+		if (t < Constants.EPSILON) {
+			return null;
+		}
 
-		sr.normal 			= normal;  				// for flat shading
-		sr.localHitPoint 	= ray.origin.add(ray.direction.multiply(t));	
+		Point3D localHitPoint = ray.origin.add(ray.direction.multiply(t));	
 
-		return (t);	
+		return new HitInfo(normal, localHitPoint, color, t);	
 	}  
 
 	public String toString() {

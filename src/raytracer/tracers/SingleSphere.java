@@ -15,10 +15,9 @@ public class SingleSphere extends Tracer {
 	}
 
 	public RGBColor traceRay(Ray ray) {
-		ShadeRec	sr = new ShadeRec(world);
-		double    	t = world.sphere.hit(ray, sr);
+		HitInfo hit = world.sphere.hit(ray);
 			
-		if (t > 0) {
+		if (hit != null) {
 			return RGBColor.RED; 
 		} else {
 			return RGBColor.BLACK;   

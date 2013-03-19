@@ -1,7 +1,7 @@
 package raytracer.geometricObjects;
+import raytracer.utilities.HitInfo;
 import raytracer.utilities.RGBColor;
 import raytracer.utilities.Ray;
-import raytracer.utilities.ShadeRec;
 
 //Copyright (C) Helen Hu 2013.
 //based on C++ code from Ray Tracing from the Ground Up, by Kevin Suffern 
@@ -42,6 +42,5 @@ public abstract class GeometricObject {
 				" with color " + color;
 	}
 	
-	public abstract double hit(Ray ray, ShadeRec s);
-
+	public abstract HitInfo hit(Ray ray);
 }

@@ -22,7 +22,7 @@ public class Triangle extends GeometricObject {
 		normal = (new Normal((v1.subtract(v0)).cross(v2.subtract(v0)).hat()));  
 	}
 
-	public double hit(Ray ray, ShadeRec sr) {	
+	public HitInfo hit(Ray ray) {	
 		double a = v0.x - v1.x, b = v0.x - v2.x, c = ray.direction.x, d = v0.x - ray.origin.x; 
 		double e = v0.y - v1.y, f = v0.y - v2.y, g = ray.direction.y, h = v0.y - ray.origin.y;
 		double i = v0.z - v1.z, j = v0.z - v2.z, k = ray.direction.z, l = v0.z - ray.origin.z;
@@ -35,33 +35,33 @@ public class Triangle extends GeometricObject {
 		double e1 = d * m - b * n - c * p;
 		double beta = e1 * inv_denom;
 
-		if (beta < 0.0)
-			return (-1.0);  // no intersection
+		if (beta < 0.0) {
+			return null;  // no intersection
+		}
 
 		double r = e * l - h * i;
 		double e2 = a * n + d * q + c * r;
 		double gamma = e2 * inv_denom;
 
-		if (gamma < 0.0 )
-			return (-1.0);  // no intersection
-
-		if (beta + gamma > 1.0)
-			return (-1.0);  // no intersection
-
+		if (gamma < 0.0 ) {
+			return null;  // no intersection
+		}
+			
+		if (beta + gamma > 1.0) {
+			return null;  // no intersection
+		}
+		
 		double e3 = a * p - b * r + d * s;
 		double t = e3 * inv_denom;
 
-		if (t < Constants.EPSILON) 
-			return (-1.0);  // no intersection
+		if (t < Constants.EPSILON) {
+			return null;  // no intersection
+		}
+		
+		Point3D localHitPoint = ray.origin.add(ray.direction.multiply(t));	
 
-		sr.normal 			= normal;  	
-		sr.localHitPoint 	= ray.origin.add(ray.direction.multiply(t));	
-
-		return (t);	
+		return new HitInfo(normal, localHitPoint, color, t);	
 	}  		
-
-
-	// ------------------------------------------------------------------------------ shadow_hit
 
 	public double shadow_hit(Ray ray) {	
 		double a = v0.x - v1.x, b = v0.x - v2.x, c = ray.direction.x, d = v0.x - ray.origin.x; 
@@ -95,7 +95,7 @@ public class Triangle extends GeometricObject {
 		if (t < Constants.EPSILON)
 			return (-1.0);
 
-		return(t);	
+		return t;	
 	}  
 
 

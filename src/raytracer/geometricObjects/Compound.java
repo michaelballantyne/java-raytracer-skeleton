@@ -26,7 +26,7 @@ public abstract class Compound extends GeometricObject {
 	 */
 	public abstract void readSMFfile(String filename) throws IOException;
 
-	public double hit(Ray ray, ShadeRec sr) {
+	public HitInfo hit(Ray ray) {
 		Normal		normal = null;
 		Point3D		localHitPoint = null;
 		boolean		hit 		= false;
@@ -34,23 +34,20 @@ public abstract class Compound extends GeometricObject {
 		RGBColor    color       = null;
 		
 		for (GeometricObject obj : objects) {
-			double t = obj.hit(ray, sr);
-			if (0 < t && t < tmin) {
+			HitInfo objectHit = obj.hit(ray);
+			if (0 < objectHit.t && objectHit.t < tmin) {
 				hit				= true;
-				tmin 			= t;
-				normal			= sr.normal;
-				localHitPoint	= sr.localHitPoint;  
-				color = obj.color;
+				tmin 			= objectHit.t;
+				normal			= objectHit.normal;
+				localHitPoint	= objectHit.localHitPoint;  
+				color = 		objectHit.color;
 			}
 		}
 		
 		if (hit) {
-			sr.t				= tmin;
-			sr.normal 			= normal;   
-			sr.localHitPoint 	= localHitPoint;  
-			sr.color = color;
+			return new HitInfo(normal, localHitPoint, color, tmin);
 		}
 		
-		return (tmin);
+		return null;
 	}
 }

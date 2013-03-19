@@ -16,32 +16,17 @@ public class MultipleObjects extends Tracer {
 	}
 
 	public RGBColor traceRay(Ray ray) {
-		ShadeRec sr = hitBareBonesObjects(ray); 
-
-		if (sr.hitAnObject) {
-			return sr.color;   
-		} else {
-			return world.backgroundColor;
-		}
-	}
-	
-	public ShadeRec hitBareBonesObjects(Ray ray) {
-		ShadeRec sr = new ShadeRec(world); 
 		double tMin = Double.MAX_VALUE;
-		RGBColor frontColor = null;
+		RGBColor frontColor = world.backgroundColor;
 
 		for (GeometricObject object : world.objects) {
-			sr.color = object.color;
-			double t = object.hit(ray, sr);
-			if ((0 < t) && (t < tMin)) {
-				sr.hitAnObject = true;
-				tMin = t;
-				frontColor = sr.color;
+			HitInfo hit = object.hit(ray);
+			if (hit != null && (0 < hit.t) && (hit.t < tMin)) {
+				tMin = hit.t;
+				frontColor = hit.color;
 			}
 		}
-		
-		sr.color = frontColor;
-		
-		return sr;   
+
+		return frontColor;
 	}
 }
