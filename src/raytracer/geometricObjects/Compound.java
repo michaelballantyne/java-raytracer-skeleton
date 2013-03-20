@@ -35,12 +35,12 @@ public abstract class Compound extends GeometricObject {
 		
 		for (GeometricObject obj : objects) {
 			HitInfo objectHit = obj.hit(ray);
-			if (0 < objectHit.t && objectHit.t < tmin) {
+			if (objectHit != null && 0 < objectHit.t && objectHit.t < tmin) {
 				hit				= true;
 				tmin 			= objectHit.t;
 				normal			= objectHit.normal;
 				localHitPoint	= objectHit.localHitPoint;  
-				color = 		objectHit.color;
+				color 			= objectHit.color;
 			}
 		}
 		
